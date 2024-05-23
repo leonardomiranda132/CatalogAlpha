@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Compras</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Coiny&display=swap');
+
+        body {
+            font-family: 'Coiny', sans-serif;
+            margin: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        h1 {
+            color: #FF8000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFF;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .search-container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 1em;
+        }
+
+        .search-container button {
+            padding: 10px;
+            border: none;
+            background-color: #FF8000;
+            color: #FFF;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .filters select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            max-width: 180px;
+        }
+
+        .container {
+            display: flex;
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .carousel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .carousel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            overflow-y: hidden;
+            max-height: 250px;
+        }
+
+        .carousel img {
+            width: 80px;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .carousel img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-arrow {
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .carousel-arrow:hover {
+            color: #FF8000;
+        }
+
+        .main-image img {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .details h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .details p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            color: #FF8000;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #FFF;
+            background-color: #FF8000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .buttons button:hover {
+            background-color: #e06b00;
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .product-table th,
+        .product-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .product-table th {
+            background-color: #FF8000;
+            color: #FFF;
+        }
+
+        .description {
+            max-height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .description.more .more-text {
+            display: block;
+        }
+
+        .description.more .more-link {
+            display: none;
+        }
+
+        .more-link {
+            display: block;
+            margin-top: 10px;
+            color: #FF8000;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+            }
+
+            .filters {
+                flex-direction: column;
+                gap: 5px;
+                
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .main-image img {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .carousel {
+                flex-direction: row;
+                overflow-x: auto;
+                max-height: none;
+            }
+
+            .carousel img {
+                width: 60px;
+            }
+
+            .carousel-arrow {
+                display: none;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .image-gallery {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .carousel-container {
+                order: 1;
+                margin-right: 20px;
+            }
+
+            .main-image {
+                order: 2;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="logo_alphabeto.png" alt="Logo da Empresa">
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Buscar por nome ou referência" onkeypress="if(event.key === 'Enter') search()">
+            <button onclick="search()">Buscar</button>
+        </div>
+        <div class="filters">
+            <select id="filter-grupo" onchange="filter()">
+                <option value="">Todos</option>
+                {% for grupo in grupos %}
+                <option value="{{ grupo }}">{{ grupo }}</option>
+                {% endfor %}
+            </select>
+            <!-- <select id="filter-categoria" onchange="filter()">
+                <option value="">Filtrar por Categoria</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria }}">{{ categoria }}</option>
+                {% endfor %}
+            </select> -->
+        </div>
+    </div>
+    <h1>Catálogo de Compras</h1>
+    <div id="product-container">
+        {% for container in containers %}
+        <div class="container product-item" data-grupo="{{ container['Grupo'] }}" data-categoria="{{ container['Categoria Similar'] }}" data-nome="{{ container['NomeProduto'] }}" data-ref="{{ container['REF'] }}">
+            <div class="image-gallery">
+                <div class="carousel-container" data-ref="{{ container['REF'] }}">
+                    <div class="carousel-arrow" data-ref="{{ container['REF'] }}" onclick="scrollCarousel(this, 'up')">&#9650;</div>
+                    <div class="carousel" id="carousel-{{ container['REF'] }}">
+                        {% for img in container['LOCAL_IMGS'] %}
+                        <img src="{{ img }}" alt="Imagem do Produto" data-ref="{{ container['REF'] }}" onclick="showImage(this)">
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-arrow" data-ref="{{ container['REF'] }}" onclick="scrollCarousel(this, 'down')">&#9660;</div>
+                </div>
+                <div class="main-image">
+                    <img id="main-image-{{ container['REF'] }}" src="{{ container['LOCAL_IMGS'][0] }}" alt="Imagem Principal">
+                </div>
+            </div>
+            <div class="details">
+                <h2>{{ container['NomeProduto'] }}</h2>
+                <p>REF: {{ container['REF'] }}</p>
+                <p class="price">R$ {{ "%.2f"|format(container['Preço Cheio']) }}</p>
+                <!-- <p class="price">R$ {{ "%.2f"|format(container['Preço Venda']) }}</p> -->
+                <div class="buttons">
+                    <!-- <button>Comprar</button>
+                    <button>Salvar nos desejos</button> -->
+                </div>
+                <h3>Descrição</h3>
+                <p class="description" id="description-{{ container['REF'] }}">
+                    {{ container['Descrição'] }}
+                    <!-- <span class="more-text">...</span>
+                    <span class="more-link" onclick="showMore(this)">Ver mais</span> -->
+                </p>
+                <div class="table-container">
+                    <table class="product-table">
+                        <tr>
+                            <th>Tamanho</th>
+                            <th>Cor</th>
+                            <th>Quantidade</th>
+                        </tr>
+                        {% for tamanho, cores in container['Grade'].items() %}
+                        {% for cor, qtd in cores.items() %}
+                        <tr>
+                            <td>{{ tamanho }}</td>
+                            <td>{{ cor }}</td>
+                            <td>{{ qtd }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function showImage(imgElement) {
+            const ref = imgElement.getAttribute('data-ref');
+            const src = imgElement.src;
+            document.getElementById('main-image-' + ref).src = src;
+        }
+
+        function scrollCarousel(element, direction) {
+            const ref = element.getAttribute('data-ref');
+            const carousel = document.getElementById('carousel-' + ref);
+            if (direction === 'up') {
+                carousel.scrollTop -= 100;
+            } else {
+                carousel.scrollTop += 100;
+            }
+        }
+
+        function search() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const products = document.getElementsByClassName('product-item');
+            Array.from(products).forEach(product => {
+                const nome = product.getAttribute('data-nome').toLowerCase();
+                const ref = product.getAttribute('data-ref').toLowerCase();
+                if (nome.includes(input) || ref.includes(input)) {
+                    product.style.display = 'flex';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function filter() {
+            const grupo = document.getElementById('filter-grupo').value;
+            const products = document.getElementsByClassName('product-item');
+            Array.from(products).forEach(product => {
+                const productGrupo = product.getAttribute('data-grupo');
+                if (grupo === '' || productGrupo === grupo) {
+                    product.style.display = 'flex';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function showMore(element) {
+            const description = element.closest('.description');
+            description.classList.add('more');
+        }
+    </script>
+</body>
+
+</html>
